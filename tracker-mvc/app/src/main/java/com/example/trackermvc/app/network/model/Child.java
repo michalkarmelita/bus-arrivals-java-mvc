@@ -38,13 +38,13 @@ public class Child {
     private String hubNaptanCode;
     @SerializedName("lines")
     @Expose
-    private List<Object> lines = new ArrayList<Object>();
+    private List<Line> lines = new ArrayList<>();
     @SerializedName("lineGroup")
     @Expose
-    private List<Object> lineGroup = new ArrayList<Object>();
+    private List<LineGroup> lineGroup = new ArrayList<>();
     @SerializedName("lineModeGroups")
     @Expose
-    private List<Object> lineModeGroups = new ArrayList<Object>();
+    private List<LineModeGroup> lineModeGroups = new ArrayList<>();
     @SerializedName("status")
     @Expose
     private Boolean status;
@@ -199,43 +199,22 @@ public class Child {
     /**
      * @return The lines
      */
-    public List<Object> getLines() {
+    public List<Line> getLines() {
         return lines;
-    }
-
-    /**
-     * @param lines The lines
-     */
-    public void setLines(List<Object> lines) {
-        this.lines = lines;
     }
 
     /**
      * @return The lineGroup
      */
-    public List<Object> getLineGroup() {
+    public List<LineGroup> getLineGroup() {
         return lineGroup;
-    }
-
-    /**
-     * @param lineGroup The lineGroup
-     */
-    public void setLineGroup(List<Object> lineGroup) {
-        this.lineGroup = lineGroup;
     }
 
     /**
      * @return The lineModeGroups
      */
-    public List<Object> getLineModeGroups() {
+    public List<LineModeGroup> getLineModeGroups() {
         return lineModeGroups;
-    }
-
-    /**
-     * @param lineModeGroups The lineModeGroups
-     */
-    public void setLineModeGroups(List<Object> lineModeGroups) {
-        this.lineModeGroups = lineModeGroups;
     }
 
     /**
@@ -246,24 +225,10 @@ public class Child {
     }
 
     /**
-     * @param status The status
-     */
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    /**
      * @return The id
      */
     public String getId() {
         return id;
-    }
-
-    /**
-     * @param id The id
-     */
-    public void setId(String id) {
-        this.id = id;
     }
 
     /**
@@ -274,24 +239,10 @@ public class Child {
     }
 
     /**
-     * @param commonName The commonName
-     */
-    public void setCommonName(String commonName) {
-        this.commonName = commonName;
-    }
-
-    /**
      * @return The placeType
      */
     public String getPlaceType() {
         return placeType;
-    }
-
-    /**
-     * @param placeType The placeType
-     */
-    public void setPlaceType(String placeType) {
-        this.placeType = placeType;
     }
 
     /**
@@ -302,24 +253,10 @@ public class Child {
     }
 
     /**
-     * @param additionalProperties The additionalProperties
-     */
-    public void setAdditionalProperties(List<AdditionalProperty> additionalProperties) {
-        this.additionalProperties = additionalProperties;
-    }
-
-    /**
      * @return The children
      */
     public List<Object> getChildren() {
         return children;
-    }
-
-    /**
-     * @param children The children
-     */
-    public void setChildren(List<Object> children) {
-        this.children = children;
     }
 
     /**
@@ -330,24 +267,10 @@ public class Child {
     }
 
     /**
-     * @param lat The lat
-     */
-    public void setLat(Double lat) {
-        this.lat = lat;
-    }
-
-    /**
      * @return The lon
      */
     public Double getLon() {
         return lon;
-    }
-
-    /**
-     * @param lon The lon
-     */
-    public void setLon(Double lon) {
-        this.lon = lon;
     }
 
 }

@@ -13,6 +13,7 @@ public abstract class BaseActionBarView extends BaseViewImpl implements BaseView
     private final ToolbarActivityController mController;
 
     protected ActionBar mActionBar;
+    protected Toolbar mToolbar;
 
     public BaseActionBarView(ToolbarActivityController controller) {
         mController = controller;
@@ -21,15 +22,15 @@ public abstract class BaseActionBarView extends BaseViewImpl implements BaseView
     @Override
     public void init(View view) {
         super.init(view);
-        Toolbar toolbar = ButterKnife.findById(view, getToolbarId());
-        mActionBar = mController.setUpToolbar(toolbar);
+        mToolbar = ButterKnife.findById(view, getToolbarId());
+        mActionBar = mController.setUpToolbar(mToolbar);
+        mActionBar.setDisplayShowTitleEnabled(false);
     }
 
     @IdRes
     protected abstract int getToolbarId();
 
-    public void setupBlankHomeActionBar() {
+    public void showNavigationIcon() {
         mActionBar.setDisplayHomeAsUpEnabled(true);
-        mActionBar.setDisplayShowTitleEnabled(false);
     }
 }

@@ -3,4 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="default_margin">16dp</dimen>
+    <dimen name="line_number_font_size">26sp</dimen>
+    <dimen name="default_horizontal_margin_big">72dp</dimen>
+    <dimen name="destination_name_font_size">18sp</dimen>
 </resources>

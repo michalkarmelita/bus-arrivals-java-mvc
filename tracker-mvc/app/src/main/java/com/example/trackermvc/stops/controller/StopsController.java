@@ -6,11 +6,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.trackermvc.app.controllers.ToolbarActivityController;
 import com.example.trackermvc.stops.model.StopData;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public interface StopsController extends ToolbarActivityController {
@@ -22,5 +18,11 @@ public interface StopsController extends ToolbarActivityController {
     @Override
     ActionBar setUpToolbar(Toolbar toolbar);
 
-    void onStopSelected(String stopId);
+    void onStopSelected(String stopId, String stopName);
+
+    void favoriteStopClicked(StopData stopData);
+
+    void showFavStops();
+
+    boolean isStopFavorite(StopData stopData);
 }

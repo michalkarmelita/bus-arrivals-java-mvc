@@ -8,4 +8,8 @@ import java.util.List;
 public interface ArrivalsController extends ToolbarActivityController {
 
     void onArrivalsLoaded(List<Arrival> arrivals);
+
+    void refresh();
+
+    void onLoadError();
 }

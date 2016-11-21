@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">tracker-mvc</string>
+    <string name="app_name">Bus Arrivals</string>
+    <string name="stops_activity_title">Bus Arrivals</string>
+
+    <string name="favourites_activity_title">Favourites</string>
+    <string name="no_favorite_stops_message">No favorite stops.</string>
+    <string name="stop_saved_message">Stop added to favorites.</string>
+    <string name="stop_removed_message">Stop removed from favorites.</string>
 </resources>

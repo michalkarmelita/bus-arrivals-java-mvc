@@ -2,6 +2,7 @@ package com.example.trackermvc.app;
 
 import android.app.Application;
 
+import com.example.trackermvc.BuildConfig;
 import com.example.trackermvc.app.injection.AppComponent;
 import com.example.trackermvc.app.injection.AppModule;
 import com.example.trackermvc.app.injection.DaggerAppComponent;
@@ -32,7 +33,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ButterKnife.setDebug(true);
+        ButterKnife.setDebug(BuildConfig.DEBUG);
         Timber.plant(mLogger);
     }
 

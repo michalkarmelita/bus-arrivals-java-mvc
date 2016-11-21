@@ -1,5 +1,6 @@
 package com.example.trackermvc.stops.injection;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.trackermvc.app.injection.qualifiers.ForActivity;
@@ -9,6 +10,8 @@ import com.example.trackermvc.app.manager.permissions.PermissionManagerImpl;
 import com.example.trackermvc.app.ui.BaseView;
 import com.example.trackermvc.stops.controller.StopsActivity;
 import com.example.trackermvc.stops.controller.StopsController;
+import com.example.trackermvc.stops.persistence.StopsDbManager;
+import com.example.trackermvc.stops.persistence.StopsDbManagerImpl;
 import com.example.trackermvc.stops.repository.StopsRepository;
 import com.example.trackermvc.stops.repository.StopsRepositoryImpl;
 import com.example.trackermvc.stops.ui.StopsView;
@@ -29,6 +32,12 @@ public class StopsModule {
     @Provides
     @ForActivity
     StopsActivity provideStopsActivity() {
+        return mActivity;
+    }
+
+    @Provides
+    @ForActivity
+    Context provideContext() {
         return mActivity;
     }
 
@@ -67,5 +76,11 @@ public class StopsModule {
     @PerActivity
     StopsRepository provideStopsRepository(StopsRepositoryImpl repository) {
         return repository;
+    }
+
+    @Provides
+    @PerActivity
+    StopsDbManager provideStopsDbManager(StopsDbManagerImpl dbManager) {
+        return dbManager;
     }
 }

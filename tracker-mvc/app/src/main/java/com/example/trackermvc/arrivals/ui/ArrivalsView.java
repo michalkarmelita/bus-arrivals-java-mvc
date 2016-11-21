@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface ArrivalsView extends BaseView {
 
+    void setToolbarTitle(String title);
+
     void displayArrivals(List<Arrival> arrivals);
 
+    void displayLoadingError();
 }

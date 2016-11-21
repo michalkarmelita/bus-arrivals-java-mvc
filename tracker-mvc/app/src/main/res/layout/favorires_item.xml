@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/stop_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <View style="@style/dividerStyle" />
+
+    <LinearLayout
+        android:id="@+id/stop_letter_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/circle"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/stop_letter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:maxLength="2"
+            tools:text="SK" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btn_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:padding="16dp"
+        android:clickable="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_delete"
+        tools:ignore="RtlCompat" />
+
+    <TextView
+        android:id="@+id/stop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/stop_letter_container"
+        android:layout_toLeftOf="@id/btn_remove"
+        android:textColor="@color/grey"
+        android:textSize="24sp"
+        tools:text="Stop Name" />
+
+</RelativeLayout>

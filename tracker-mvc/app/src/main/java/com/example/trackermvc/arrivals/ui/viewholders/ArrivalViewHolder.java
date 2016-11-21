@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 
 public class ArrivalViewHolder extends RecyclerView.ViewHolder {
 
-    public static final int MINUTES = 60;
+    private static final int MINUTES = 60;
     @BindView(R.id.line_name)
     TextView mLineName;
     @BindView(R.id.destination)
@@ -35,10 +35,6 @@ public class ArrivalViewHolder extends RecyclerView.ViewHolder {
         int minutes = timeToStation / MINUTES;
         int seconds = timeToStation % MINUTES;
 
-        if (seconds < 10) {
-            return String.format("%s'0%s", String.valueOf(minutes), String.valueOf(seconds));
-        }
-
-        return String.format("%s'%s", String.valueOf(minutes), String.valueOf(seconds));
+        return String.format("%s min %s s", String.valueOf(minutes), String.valueOf(seconds));
     }
 }

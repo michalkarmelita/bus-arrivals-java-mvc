@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface StopsView extends BaseView {
 
-    void displayLocation(Location mCurrentLocation);
+    void zoomToLocation(Location mCurrentLocation);
 
     void displayStops(List<StopData> stops);
 
@@ -32,5 +32,11 @@ public interface StopsView extends BaseView {
     boolean stopDetailsExpanded();
 
     void collapseStopDetails();
+
+    void initMap();
+
+    void setFavouriteIcon(boolean favorite);
+
+    void showFavoritedSnackbar(boolean favorite);
 }
 

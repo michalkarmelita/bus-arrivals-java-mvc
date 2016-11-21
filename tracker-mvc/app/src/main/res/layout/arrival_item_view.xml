@@ -3,53 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    tools:ignore="RtlHardcoded"
+    >
 
     <TextView
         android:id="@+id/line_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
-        android:textStyle="bold"
-        tools:text="10" />
-
-    <TextView
-        android:id="@+id/expected"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="4dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:textStyle="bold"
-        tools:text="3'30" />
-
-    <TextView
-        android:id="@+id/exp_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/expected"
-        android:textStyle="bold"
-        android:text="in: " />
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/line_number_font_size"
+        tools:text="205" />
 
     <TextView
         android:id="@+id/destination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:layout_marginLeft="56dp"
-        android:layout_toLeftOf="@id/exp_title"
         android:layout_alignParentLeft="true"
-        android:textStyle="bold"
-        tools:text=" Kings Cross" />
+        android:layout_marginLeft="@dimen/default_horizontal_margin_big"
+        android:paddingTop="8dp"
+        android:textSize="@dimen/destination_name_font_size"
+        tools:text="Kings Cross"/>
+
+    <TextView
+        android:id="@+id/expected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/destination"
+        android:layout_alignStart="@+id/destination"
+        android:layout_below="@+id/destination"
+        android:paddingBottom="8dp"
+        android:textSize="14sp"
+        android:drawableLeft="@drawable/ic_feed"
+        tools:text="3 min 30 s" />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignBottom="@id/destination"
-        android:background="@android:color/darker_gray"/>
+        style="@style/dividerStyle"
+        android:layout_alignBottom="@id/expected" />
 
 </RelativeLayout>

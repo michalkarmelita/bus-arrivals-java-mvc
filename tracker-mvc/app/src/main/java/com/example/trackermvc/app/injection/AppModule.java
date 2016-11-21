@@ -8,6 +8,7 @@ import com.example.trackermvc.app.injection.qualifiers.ForApplication;
 import com.example.trackermvc.app.injection.qualifiers.ForIoThread;
 import com.example.trackermvc.app.injection.qualifiers.ForMainThread;
 import com.example.trackermvc.app.injection.scopes.PerApplication;
+import com.google.gson.Gson;
 
 import dagger.Module;
 import dagger.Provides;
@@ -56,5 +57,11 @@ public class AppModule {
     @ForMainThread
     Scheduler provideMainScheduler() {
         return AndroidSchedulers.mainThread();
+    }
+
+    @Provides
+    @PerApplication
+    Gson provideGson() {
+        return new Gson();
     }
 }

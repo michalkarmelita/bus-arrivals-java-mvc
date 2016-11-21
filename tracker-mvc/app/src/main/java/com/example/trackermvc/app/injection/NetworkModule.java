@@ -3,8 +3,8 @@ package com.example.trackermvc.app.injection;
 
 import com.example.trackermvc.BuildConfig;
 import com.example.trackermvc.app.injection.scopes.PerApplication;
-import com.example.trackermvc.app.network.NetworkManager;
-import com.example.trackermvc.app.network.NetworkManagerImpl;
+import com.example.trackermvc.stops.network.StopsNetworkManager;
+import com.example.trackermvc.stops.network.StopsNetworkManagerImpl;
 import com.example.trackermvc.app.network.TflApi;
 import com.example.trackermvc.app.network.interceptors.LogInInterceptor;
 
@@ -63,7 +63,7 @@ public class NetworkModule {
 
     @Provides
     @PerApplication
-    NetworkManager provideNetworkManager(NetworkManagerImpl manager) {
+    StopsNetworkManager provideNetworkManager(StopsNetworkManagerImpl manager) {
         return manager;
     }
 
