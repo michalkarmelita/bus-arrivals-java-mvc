@@ -61,7 +61,7 @@ import butterknife.BindView;
 import rx.Scheduler;
 import timber.log.Timber;
 
-public class StopsViewImpl extends BaseActionBarView implements StopsView, OnMapReadyCallback, View.OnTouchListener {
+public class StopsViewImpl extends BaseActionBarView implements StopsView, OnMapReadyCallback {
     private static final int MAP_ZOOM = 16;
 
     @BindView(R.id.root_view)
@@ -191,7 +191,7 @@ public class StopsViewImpl extends BaseActionBarView implements StopsView, OnMap
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
         mBottomSheetBehavior.setHideable(true);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        mDisplayArrivals.setOnTouchListener(this);
+
         mFavStops.setOnClickListener(v -> {
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             setSmallMarker(mCurrentMarker);
@@ -259,7 +259,7 @@ public class StopsViewImpl extends BaseActionBarView implements StopsView, OnMap
         mStopName.setText(stopData.getCommonName());
         mStopDetails.setText(stopData.getIndicator());
         this.stopData = stopData;
-//        mDisplayArrivals.setOnClickListener(v -> mController.onStopSelected(stopData.getId(), stopData.getCommonName()));
+        mDisplayArrivals.setOnClickListener(v -> mController.onStopSelected(stopData.getId(), stopData.getCommonName()));
         setSmallMarker(mCurrentMarker);
         setFavouriteIcon(mController.isStopFavorite(stopData));
         mFavButton.setOnClickListener(v -> mController.favoriteStopClicked(stopData));
@@ -277,35 +277,5 @@ public class StopsViewImpl extends BaseActionBarView implements StopsView, OnMap
     public void showFavoritedSnackbar(boolean favorited) {
         int messageId = favorited ? R.string.stop_saved_message : R.string.stop_removed_message;
         Snackbar.make(mRootView, messageId, Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-            if (view.getId() == R.id.arrivals_button && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                animateRevealColorFromCoordinates(mMapView, (int) motionEvent.getRawX(), (int) motionEvent.getRawY());
-            }
-        }
-        return false;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private Animator animateRevealColorFromCoordinates(View view, int x, int y) {
-        float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
-
-        Animator anim = ViewAnimationUtils.createCircularReveal(view, x, y, 0, finalRadius);
-        view.setBackgroundColor(Color.WHITE);
-        anim.setDuration(2000);
-        anim.setInterpolator(new AccelerateDecelerateInterpolator());
-        anim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                mController.onStopSelected(stopData.getId(), stopData.getCommonName());
-            }
-        });
-        anim.start();
-
-        return anim;
     }
 }
