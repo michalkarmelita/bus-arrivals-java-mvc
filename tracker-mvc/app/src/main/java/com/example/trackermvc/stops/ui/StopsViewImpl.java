@@ -1,24 +1,37 @@
 package com.example.trackermvc.stops.ui;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,11 +61,11 @@ import butterknife.BindView;
 import rx.Scheduler;
 import timber.log.Timber;
 
-public class StopsViewImpl extends BaseActionBarView implements StopsView, OnMapReadyCallback {
+public class StopsViewImpl extends BaseActionBarView implements StopsView, OnMapReadyCallback, View.OnTouchListener {
     private static final int MAP_ZOOM = 16;
 
     @BindView(R.id.root_view)
-    View mRootView;
+    CoordinatorLayout mRootView;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.favorites_stops)
@@ -79,8 +92,8 @@ public class StopsViewImpl extends BaseActionBarView implements StopsView, OnMap
     private GoogleMap mMap;
     private boolean first = true;
     private BottomSheetBehavior<View> mBottomSheetBehavior;
-    private int bottomSheetState;
     private Marker mCurrentMarker;
+    private StopData stopData;
 
 
     @Inject
@@ -178,32 +191,7 @@ public class StopsViewImpl extends BaseActionBarView implements StopsView, OnMap
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
         mBottomSheetBehavior.setHideable(true);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        if (bottomSheetState == BottomSheetBehavior.STATE_DRAGGING ||
-                                bottomSheetState == BottomSheetBehavior.STATE_EXPANDED) {
-                            mDisplayArrivals.animate().scaleX(0).scaleY(0).setDuration(100);
-                            setSmallMarker(mCurrentMarker);
-                            break;
-                        }
-                        if (bottomSheetState == BottomSheetBehavior.STATE_HIDDEN ||
-                                bottomSheetState == BottomSheetBehavior.STATE_COLLAPSED) {
-                            mDisplayArrivals.animate().scaleX(1).scaleY(1).setDuration(100);
-                            break;
-                        }
-                        mDisplayArrivals.setVisibility(View.VISIBLE);
-
-                }
-                bottomSheetState = newState;
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-            }
-        });
+        mDisplayArrivals.setOnTouchListener(this);
         mFavStops.setOnClickListener(v -> {
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             setSmallMarker(mCurrentMarker);
@@ -270,7 +258,9 @@ public class StopsViewImpl extends BaseActionBarView implements StopsView, OnMap
     private void bindStopData(StopData stopData) {
         mStopName.setText(stopData.getCommonName());
         mStopDetails.setText(stopData.getIndicator());
-        mDisplayArrivals.setOnClickListener(v -> mController.onStopSelected(stopData.getId(), stopData.getCommonName()));
+        this.stopData = stopData;
+//        mDisplayArrivals.setOnClickListener(v -> mController.onStopSelected(stopData.getId(), stopData.getCommonName()));
+        setSmallMarker(mCurrentMarker);
         setFavouriteIcon(mController.isStopFavorite(stopData));
         mFavButton.setOnClickListener(v -> mController.favoriteStopClicked(stopData));
     }
@@ -287,5 +277,35 @@ public class StopsViewImpl extends BaseActionBarView implements StopsView, OnMap
     public void showFavoritedSnackbar(boolean favorited) {
         int messageId = favorited ? R.string.stop_saved_message : R.string.stop_removed_message;
         Snackbar.make(mRootView, messageId, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+            if (view.getId() == R.id.arrivals_button && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                animateRevealColorFromCoordinates(mMapView, (int) motionEvent.getRawX(), (int) motionEvent.getRawY());
+            }
+        }
+        return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private Animator animateRevealColorFromCoordinates(View view, int x, int y) {
+        float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, x, y, 0, finalRadius);
+        view.setBackgroundColor(Color.WHITE);
+        anim.setDuration(2000);
+        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mController.onStopSelected(stopData.getId(), stopData.getCommonName());
+            }
+        });
+        anim.start();
+
+        return anim;
     }
 }

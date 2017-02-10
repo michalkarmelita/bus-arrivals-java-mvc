@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.example.trackermvc.app.App;
 import com.example.trackermvc.app.controllers.BaseActivity;
-import com.example.trackermvc.app.manager.permissions.PermissionManager;
+import com.example.trackermvc.app.permissions.PermissionManager;
 import com.example.trackermvc.arrivals.controller.ArrivalsActivity;
 import com.example.trackermvc.favorites.controller.FavoritesActivity;
 import com.example.trackermvc.stops.injection.LocationModule;
@@ -147,6 +147,7 @@ public class StopsActivity extends BaseActivity implements StopsController, Loca
 
     @Override
     public void onStopSelected(String stopId, String stopName) {
+        mView.collapseStopDetails();
         startActivity(ArrivalsActivity.launch(this, stopId, stopName));
     }
 

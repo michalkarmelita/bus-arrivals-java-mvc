@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.trackermvc.app.injection.qualifiers.ForActivity;
 import com.example.trackermvc.app.injection.scopes.PerActivity;
-import com.example.trackermvc.app.manager.permissions.PermissionManager;
-import com.example.trackermvc.app.manager.permissions.PermissionManagerImpl;
+import com.example.trackermvc.app.permissions.PermissionManager;
+import com.example.trackermvc.app.permissions.PermissionManagerImpl;
 import com.example.trackermvc.app.ui.BaseView;
 import com.example.trackermvc.stops.controller.StopsActivity;
 import com.example.trackermvc.stops.controller.StopsController;
