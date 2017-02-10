@@ -3,6 +3,7 @@ package com.example.trackermvc.stops.controller;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Window;
 
 import com.example.trackermvc.app.controllers.ToolbarActivityController;
 import com.example.trackermvc.stops.model.StopData;
@@ -25,4 +26,6 @@ public interface StopsController extends ToolbarActivityController {
     void showFavStops();
 
     boolean isStopFavorite(StopData stopData);
+
+    Window getWindow();
 }

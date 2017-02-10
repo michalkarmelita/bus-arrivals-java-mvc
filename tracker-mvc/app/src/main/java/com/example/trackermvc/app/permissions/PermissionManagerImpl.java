@@ -1,4 +1,4 @@
-package com.example.trackermvc.app.manager.permissions;
+package com.example.trackermvc.app.permissions;
 
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
